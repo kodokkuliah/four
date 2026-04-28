@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Little Space For Us</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <section class="hero">
+      <div class="reveal stagger">
+        <p class="small-text">hi dila sayangg 💕</p>
+        <h1>
+          this is <br />
+          our little milestone
+        </h1>
+        <p>4 months of us, 28 April</p>
+        <button onclick="scrollToSection('intro')">click me</button>
+      </div>
+    </section>
+
+    <section id="intro" class="section">
+      <div class="reveal stagger">
+        <h2>us in a nutshell</h2>
+        <p>
+          it’s only been 4 months<br />
+          but somehow… it already feels like a lot of memories
+        </p>
+        <p>
+          dari yang awalnya biasa aja<br />
+          sampe sekarang jadi sering call, random ngobrol gak jelas, nonton
+          bareng, kamu yang sering jengkel karena aku ngeselin, mabar game yang
+          aku gak paham banget, bahkan sampe aku maunya nempel terus ke kamu 😭
+        </p>
+        <p>and i really like… how we are</p>
+      </div>
+      <div class="scroll-down" onclick="scrollNext(this)">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="reveal stagger">
+        <h2>things i like about us</h2>
+        <div class="cards">
+          <div class="card">cara kamu bisa jadi super lucu tanpa sadar</div>
+          <div class="card">this is new but the way when you “nyenyenye”</div>
+          <div class="card">our calls that somehow last for hours</div>
+          <div class="card">our little deeptalks</div>
+          <div class="card">the way you tell your stories</div>
+          <div class="card">even your random moods 😤</div>
+        </div>
+      </div>
+      <div class="scroll-down" onclick="scrollNext(this)">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="reveal stagger">
+        <h2>for you</h2>
+        <p>
+          i know sometimes things feel a bit much<br />
+          or things can get a little overwhelming<br />
+        </p>
+        <p>
+          i'm sorry for not always respond perfectly<br />
+          but i’m learning
+        </p>
+        <p>pelan-pelan, i’m trying to understand you better</p>
+        <p>so i can love you better, in a way that feels right for you</p>
+        <p>and… i’ll be here</p>
+      </div>
+      <div class="scroll-down" onclick="scrollNext(this)">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="reveal stagger">
+        <h2>a small thank you</h2>
+        <p>
+          thank you ya<br />
+          for staying<br />
+          for talking to me every day, even though i'm not good at it<br />
+          for being part of my routine now <br />
+          for always supporting me <br />
+          for coming to my life <br />
+          and i don’t say this enough… but i’m really grateful to meet you
+        </p>
+        <p>you make my days feel… warmer</p>
+      </div>
+      <div class="scroll-down" onclick="scrollNext(this)">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <section class="section interactive">
+      <div class="reveal">
+        <h2>tiny buttons for you</h2>
+
+        <button onclick="showComfortMessage()">
+          tap this when you need it
+        </button>
+        <p id="comfortMessage" class="result"></p>
+
+        <button onclick="showSleepCall()">sleep call mode 🌙</button>
+        <p id="sleepCallMessage" class="result"></p>
+
+        <button onclick="showUsMoment()">random us moment</button>
+        <p id="usMomentMessage" class="result"></p>
+      </div>
+      <div class="scroll-down" onclick="scrollNext(this)">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <section class="section closing">
+      <div class="reveal stagger">
+        <p>i don’t really know what’s ahead</p>
+        <p>
+          but for now,<br />
+          i like being here with you
+        </p>
+        <p>and i hope we can keep going, in our own pace</p>
+        <h2>happy 4 months sayangg 💕</h2>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+    <audio id="bgMusic" loop>
+      <source src="assets/music/music.mp3" type="audio/mpeg" />
+    </audio>
+
+    <button id="musicToggle">🔈</button>
+  </body>
+</html>
