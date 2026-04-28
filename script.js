@@ -5,11 +5,9 @@ function smoothScrollTo(targetY, duration = 900) {
 
   function animation(currentTime) {
     if (!startTime) startTime = currentTime;
+
     const timeElapsed = currentTime - startTime;
-
     const progress = Math.min(timeElapsed / duration, 1);
-
-    // easing (biar halus, bukan linear)
     const ease = 1 - Math.pow(1 - progress, 3);
 
     window.scrollTo(0, startY + distance * ease);
@@ -24,7 +22,10 @@ function smoothScrollTo(targetY, duration = 900) {
 
 function scrollToSection(id) {
   const target = document.getElementById(id);
-  smoothScrollTo(target.offsetTop, 1000); // bisa diubah durasinya
+
+  if (target) {
+    smoothScrollTo(target.offsetTop, 1000);
+  }
 }
 
 function scrollNext(el) {
@@ -58,15 +59,15 @@ const usMoments = [
 let comfortBag = [];
 let usMomentBag = [];
 
-function getFromBag(sourceArray, bagName) {
-  if (bagName.length === 0) {
-    bagName.push(...sourceArray);
+function getFromBag(sourceArray, bag) {
+  if (bag.length === 0) {
+    bag.push(...sourceArray);
   }
 
-  const randomIndex = Math.floor(Math.random() * bagName.length);
-  const item = bagName[randomIndex];
+  const randomIndex = Math.floor(Math.random() * bag.length);
+  const item = bag[randomIndex];
 
-  bagName.splice(randomIndex, 1);
+  bag.splice(randomIndex, 1);
 
   return item;
 }
@@ -86,6 +87,19 @@ function showUsMoment() {
   showResult("usMomentMessage", getFromBag(usMoments, usMomentBag));
 }
 
+function showResult(id, text) {
+  const el = document.getElementById(id);
+
+  if (!el) return;
+
+  el.classList.remove("show");
+
+  setTimeout(() => {
+    el.textContent = text;
+    el.classList.add("show");
+  }, 120);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   const revealElements = document.querySelectorAll(".reveal");
 
@@ -103,61 +117,77 @@ window.addEventListener("DOMContentLoaded", () => {
   );
 
   revealElements.forEach((el) => revealObserver.observe(el));
+
+  setupMusic();
 });
 
-function showResult(id, text) {
-  const el = document.getElementById(id);
-  el.classList.remove("show");
+function setupMusic() {
+  const music = document.getElementById("bgMusic");
+  const toggle = document.getElementById("musicToggle");
 
-  setTimeout(() => {
-    el.textContent = text;
-    el.classList.add("show");
-  }, 120);
-}
+  if (!music || !toggle) return;
 
-const music = document.getElementById("bgMusic");
-const toggle = document.getElementById("musicToggle");
+  let isPlaying = false;
+  let fadeInterval = null;
 
-let isPlaying = false;
+  async function fadeInMusic() {
+    clearInterval(fadeInterval);
 
-// fade in function (biar halus banget)
-function fadeIn(audio, duration = 1500) {
-  audio.volume = 0;
-  audio.play();
+    music.volume = 0;
 
-  let step = 0.05;
-  let interval = duration / (1 / step);
+    try {
+      await music.play();
 
-  let fade = setInterval(() => {
-    if (audio.volume < 0.4) {
-      audio.volume = Math.min(audio.volume + step, 0.4);
-    } else {
-      clearInterval(fade);
+      toggle.textContent = "🔊";
+      isPlaying = true;
+
+      fadeInterval = setInterval(() => {
+        if (music.volume < 0.35) {
+          music.volume = Math.min(music.volume + 0.02, 0.35);
+        } else {
+          clearInterval(fadeInterval);
+        }
+      }, 80);
+    } catch (error) {
+      console.log("Music blocked:", error);
     }
-  }, interval);
-}
+  }
 
-// toggle button
-toggle.addEventListener("click", () => {
-  if (!isPlaying) {
-    fadeIn(music);
-    toggle.textContent = "🔊";
-    isPlaying = true;
-  } else {
+  function pauseMusic() {
+    clearInterval(fadeInterval);
+
     music.pause();
     toggle.textContent = "🔈";
     isPlaying = false;
   }
-});
 
-document.body.addEventListener(
-  "click",
-  () => {
-    if (!isPlaying) {
-      fadeIn(music);
-      toggle.textContent = "🔊";
-      isPlaying = true;
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+
+    if (isPlaying) {
+      pauseMusic();
+    } else {
+      fadeInMusic();
     }
-  },
-  { once: true },
-);
+  });
+
+  document.addEventListener(
+    "click",
+    () => {
+      if (!isPlaying) {
+        fadeInMusic();
+      }
+    },
+    { once: true },
+  );
+
+  document.addEventListener(
+    "touchstart",
+    () => {
+      if (!isPlaying) {
+        fadeInMusic();
+      }
+    },
+    { once: true },
+  );
+}
